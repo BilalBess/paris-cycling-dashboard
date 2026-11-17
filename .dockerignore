@@ -1,0 +1,6 @@
+data/raw_counts.csv
+.git
+.venv
+__pycache__
+tests
+reports

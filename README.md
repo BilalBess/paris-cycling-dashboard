@@ -1,5 +1,7 @@
 # Paris Cycling Traffic Dashboard
 
+[![CI](https://github.com/BilalBess/paris-cycling-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/BilalBess/paris-cycling-dashboard/actions/workflows/ci.yml)
+
 Interactive dashboard (Streamlit + Plotly) built on **1 million hourly measurements from 113 automatic bike counters in Paris** (open data, Oct 2025 - Nov 2026).
 I also wrote a guide to rebuild the same report in **Power BI** (DAX measures included).
 
@@ -48,6 +50,20 @@ streamlit run app.py          # works directly with the files in data/processed
 python src/prepare_data.py
 python src/make_figures.py
 ```
+
+## Tests
+```bash
+pip install pytest
+pytest -q
+```
+The tests cover the cleaning (duplicates, missing values, UTC to Paris time, complete days) and a smoke test of the Streamlit app. They run on every push with GitHub Actions (`.github/workflows/ci.yml`: lint with ruff, then pytest).
+
+## Docker
+```bash
+docker build -t paris-cycling-dashboard .
+docker run -p 8501:8501 paris-cycling-dashboard
+```
+Then open http://localhost:8501.
 
 ## Skills shown
 Data cleaning (time zones, duplicates, missing data), feature engineering, KPI design, Streamlit, Plotly, Power BI / DAX knowledge, communicating insights.

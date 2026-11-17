@@ -34,8 +34,8 @@ def download():
                 f.write(chunk)
 
 
-def prepare():
-    df = pd.read_csv(RAW, encoding="utf-8-sig")
+def prepare(raw=RAW, proc=PROC):
+    df = pd.read_csv(raw, encoding="utf-8-sig")
     print("raw rows:", len(df))
 
     # 1) cleaning
@@ -54,7 +54,7 @@ def prepare():
     df["weekday"] = df["date"].dt.day_of_week  # 0 = Monday
     df["is_weekend"] = df["weekday"] >= 5
 
-    PROC.mkdir(parents=True, exist_ok=True)
+    proc.mkdir(parents=True, exist_ok=True)
 
     # 3) counter table
     counters = (
@@ -63,7 +63,7 @@ def prepare():
              n_hours=("sum_counts", "size"))
         .reset_index()
     )
-    counters.to_csv(PROC / "counters.csv", index=False)
+    counters.to_csv(proc / "counters.csv", index=False)
 
     # 4) daily table (one row per counter and day)
     daily = (
@@ -74,7 +74,7 @@ def prepare():
     daily["day"] = pd.to_datetime(daily["day"])
     # a day is "complete" only if the counter reported at least 20 hours
     daily["complete_day"] = daily["n_hours"] >= 20
-    daily.to_csv(PROC / "daily_counts.csv", index=False)
+    daily.to_csv(proc / "daily_counts.csv", index=False)
 
     # 5) hourly profile (counter x weekday-type x hour)
     hourly = (
@@ -83,7 +83,7 @@ def prepare():
         .round(1)
         .reset_index(name="avg_count")
     )
-    hourly.to_csv(PROC / "hourly_profile.csv", index=False)
+    hourly.to_csv(proc / "hourly_profile.csv", index=False)
 
     print("period:", df["date"].min().date(), "->", df["date"].max().date())
     print("counters:", len(counters), "| daily rows:", len(daily))
