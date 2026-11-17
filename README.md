@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/BilalBess/paris-cycling-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/BilalBess/paris-cycling-dashboard/actions/workflows/ci.yml)
 
+**Live demo:** https://paris-cycling-dashboard-kohvft7hfjjhgc7cebshmv.streamlit.app/
 Interactive dashboard (Streamlit + Plotly) built on **1 million hourly measurements from 113 automatic bike counters in Paris** (open data, Oct 2025 - Nov 2026).
 I also wrote a guide to rebuild the same report in **Power BI** (DAX measures included).
 
