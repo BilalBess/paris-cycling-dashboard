@@ -1,0 +1,4 @@
+data/raw_counts.csv
+__pycache__/
+.venv/
+.DS_Store
